@@ -1,0 +1,33 @@
+name: Docusaurus Build and Deploy
+
+# Hangi olayın bu iş akışını tetikleyeceğini belirtir
+on:
+  push:
+    branches:
+      - main  # İş akışının sadece `main` dalına yapılan push işlemlerinde çalışmasını belirtir
+
+jobs:
+  build:
+    # Hangi sanal makinenin kullanılacağını belirtir
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # Kodunuzu checkout yapmak için bu GitHub Actions eklentisini kullanır
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2  # Node.js'i ayarlamak için bu GitHub Actions eklentisini kullanır
+      with:
+        node-version: '14'  # Kullanılacak Node.js sürümünü belirtir
+
+    - name: Install dependencies
+      run: yarn  # Projenizin bağımlılıklarını yükler
+
+    - name: Build Docusaurus
+      run: yarn build  # Docusaurus projesini derler
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3  # GitHub Pages'e dağıtım yapmak için bu GitHub Actions eklentisini kullanır
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}  # GitHub Actions tarafından otomatik olarak sağlanan GitHub token
+        publish_dir: ./build  # Derlenmiş Docusaurus sitenizin çıktısının bulunduğu dizin
