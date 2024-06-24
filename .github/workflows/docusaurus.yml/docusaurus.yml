@@ -4,7 +4,7 @@ name: Docusaurus Build and Deploy
 on:
   push:
     branches:
-      - main  # İş akışının sadece `main` dalına yapılan push işlemlerinde çalışmasını belirtir
+      - master  # İş akışının sadece `main` dalına yapılan push işlemlerinde çalışmasını belirtir
 
 jobs:
   build:
